@@ -7,3 +7,5 @@ export const Container = styled.SafeAreaView`
 export const Header = styled.View``;
 
 export const Title = styled.Text``;
+
+export const PokemonList = styled.FlatList``;
