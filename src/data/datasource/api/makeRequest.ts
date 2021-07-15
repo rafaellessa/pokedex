@@ -8,7 +8,7 @@ const makeRequest = async ({
   params,
   action,
 }: IMakeRequest) => {
-  const baseUrl = url ? "" : process.env.API_URL;
+  const baseUrl = url ? "" : "https://pokeapi.co/api/v2/pokemon/";
   const urlFull = `${action ?? url}${buildQueryString(params)}`;
 
   const requestConfig: AxiosRequestConfig = {
