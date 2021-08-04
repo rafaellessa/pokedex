@@ -1,5 +1,7 @@
 import { NativeModules } from "react-native";
 import Reactotron from "reactotron-react-native";
+import sagaPlugin from "reactotron-redux-saga";
+import { reactotronRedux } from "reactotron-redux";
 
 declare global {
   interface Console {
@@ -13,7 +15,10 @@ if (__DEV__) {
   tron = Reactotron.configure({
     name: "Pokedex",
     host: NativeModules.SourceCode.scriptURL.split("://")[1].split(":")[0],
-  }).connect();
+  })
+    .use(reactotronRedux())
+    .use(sagaPlugin({}))
+    .connect();
 
   tron.clear!();
 
