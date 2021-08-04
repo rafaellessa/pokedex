@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import store from "./src/redux/store";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
+import { StatusBar } from "expo-status-bar";
 
 import {
   Rajdhani_400Regular,
@@ -30,6 +31,7 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
+        <StatusBar style="light" />
         <Stack />
       </NavigationContainer>
     </Provider>
