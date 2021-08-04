@@ -1,10 +1,10 @@
 import axios, { AxiosInstance } from "axios";
 export default class Api {
   private static apiInstance: AxiosInstance;
-  public static getApiInstance(baseUrl: string): AxiosInstance {
+  public static getApiInstance(baseUrl: string): AxiosInstance {    
     const api = axios.create({
       baseURL: baseUrl,
-      timeout: 120,
+      timeout: 3600,
       withCredentials: true,
       headers: {
         accept: "application/json, text/plain, */*",

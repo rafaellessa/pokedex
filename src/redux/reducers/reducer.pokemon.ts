@@ -32,14 +32,15 @@ export const reducer = createReducer<PokemonState, ReducerTypes>(
   {
     [Types.POKEDEX_REQUEST_GET_ALL_POKEMON]: (state) => {
       return state.merge({
-        loading: true;
+        loading: true,
         error: null
       });
     },
     [Types.POKEDEX_SUCCESS_GET_ALL_POKEMON]: (state, action) => {
+      
       return state.merge({
         loading: false,
-        pokemons: action.Pokemon,
+        pokemons: action.pokemon,
         error: null
       })
     },

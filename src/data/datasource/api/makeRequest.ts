@@ -11,13 +11,14 @@ const makeRequest = async ({
   const baseUrl = url ? "" : "https://pokeapi.co/api/v2/pokemon/";
   const urlFull = `${action ?? url}${buildQueryString(params)}`;
 
+  
   const requestConfig: AxiosRequestConfig = {
     url: urlFull,
     headers,
     method,
   };
 
-  const apiInstance = Api.getApiInstance(baseUrl!);
+  const apiInstance = Api.getApiInstance(baseUrl);
   const response = await apiInstance.request(requestConfig);
 
   return response;

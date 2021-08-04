@@ -1,6 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import Stack from "./src/navigation/stack";
+import { Provider } from "react-redux";
+import store from "./src/redux/store";
 
 if (__DEV__) {
   import("./ReactoTron").then(() => console.log("Reactotron Configurado"));
@@ -8,9 +10,11 @@ if (__DEV__) {
 
 const App: React.FC = () => {
   return (
-    <NavigationContainer>
-      <Stack />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack />
+      </NavigationContainer>
+    </Provider>
   );
 };
 
