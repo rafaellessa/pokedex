@@ -24,7 +24,7 @@ const Home: React.FC = () => {
     dispatch(PokemonActions.pokedexRequestGetAllPokemon());
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: PokemonFactory }) => (
     <ListItem name={item.name} id={item.id} image={item.image} />
   );
 
