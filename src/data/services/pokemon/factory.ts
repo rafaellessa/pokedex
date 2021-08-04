@@ -5,7 +5,7 @@ export const factoryPokemon = (pokemonList: Pokemon[]): PokemonFactory[] => {
 
   pokemonList.forEach((pokemon) => {
     const id = pokemon.url
-      .substr(pokemon.url.length - 3)
+      .substr(33)
       .replace(/[\[\].!'@,><|://\\;&*()_+=]/g, "");
     const parsedPokemon: PokemonFactory = {
       id,

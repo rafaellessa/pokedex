@@ -22,7 +22,15 @@ export interface State {
 
 export type PokemonState = ImmutableObject<State>;
 
-export type PokemonRequestGetAllPokemon = Action<PokemonActionTypes>;
+//export type PokemonRequestGetAllPokemon = Action<PokemonActionTypes>;
+
+export interface PokemonRequestGetAllPokemonParams {
+  offset?: number;
+}
+export interface PokemonRequestGetAllPokemon
+  extends Action<PokemonActionTypes> {
+  data?: PokemonRequestGetAllPokemonParams;
+}
 
 export interface PokemonSuccessGetAllPokemon
   extends Action<PokemonActionTypes> {
@@ -35,7 +43,9 @@ export interface PokemonFailureGetAllPokemon
 }
 
 export interface CreatorTypes {
-  pokedexRequestGetAllPokemon(): PokemonRequestGetAllPokemon;
+  pokedexRequestGetAllPokemon(
+    data?: PokemonRequestGetAllPokemonParams
+  ): PokemonRequestGetAllPokemon;
   pokedexSuccessGetAllPokemon(pokemons: Pokemon[]): PokemonSuccessGetAllPokemon;
   pokedexFailureGetAllPokemon(
     error: string | null

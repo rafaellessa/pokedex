@@ -6,10 +6,12 @@ import { getPokemons } from "../../redux/selectors/selector.pokemon";
 import { Container, PokemonList } from "./styles";
 import ListItem from "./ListItem";
 import { PokemonFactory } from "~/data/services/pokemon/types";
-import { RefreshControl } from "react-native";
+import { ActivityIndicator, RefreshControl } from "react-native";
 import { theme } from "../../global/theme/theme";
+import { useState } from "react";
 
 const Home: React.FC = () => {
+  const [page, setPage] = useState(1);
   const dispatch = useDispatch();
 
   const pokemons = useSelector(getPokemons);
@@ -19,8 +21,20 @@ const Home: React.FC = () => {
 
   useEffect(() => {}, [pokemons]);
 
+  useEffect(() => {
+    if (page > 1) {
+      fetchPokemons();
+    }
+  }, [page]);
+
   const fetchPokemons = async () => {
-    dispatch(PokemonActions.pokedexRequestGetAllPokemon());
+    if (page > 1) {
+      const limit = 20;
+      const offset = page * limit;
+      dispatch(PokemonActions.pokedexRequestGetAllPokemon({ offset }));
+    } else {
+      dispatch(PokemonActions.pokedexRequestGetAllPokemon({}));
+    }
   };
   const renderItem = ({ item }: { item: PokemonFactory }) => (
     <ListItem name={item.name} id={item.id} image={item.image} />
@@ -41,6 +55,11 @@ const Home: React.FC = () => {
             tintColor={theme.colors.primary}
           />
         }
+        onEndReachedThreshold={0.1}
+        onEndReached={() => {
+          setPage(page + 1);
+        }}
+        ListFooterComponent={<ActivityIndicator />}
       />
     </Container>
   );

@@ -11,7 +11,7 @@ import { PokemonReducers } from "../types/types.redux";
 
 const { Types, Creators } = createActions<PokemonActionTypes, CreatorTypes>(
   {
-    pokedexRequestGetAllPokemon: null,
+    pokedexRequestGetAllPokemon: ["data"],
     pokedexSuccessGetAllPokemon: ["pokemon"],
     pokedexFailureGetAllPokemon: ["error"],
     reset: null,
