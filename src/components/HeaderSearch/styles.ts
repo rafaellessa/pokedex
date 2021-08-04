@@ -4,7 +4,6 @@ import { theme } from "./../../global/theme/theme";
 
 export const Container = styled.View`
   padding: 20px;
-  background-color: ${theme.colors.primary};
   flex-direction: row;
   justify-content: space-between;
 `;
@@ -21,11 +20,12 @@ export const IconContainer = styled.TouchableOpacity`
 
 export const Title = styled.Text`
   font-size: 24px;
-  font-family: ${theme.fonts.text500};
+  font-family: ${theme.fonts.title700};
+  color: ${theme.colors.secondary};
 `;
 
 export const SearchIcon = styled(FontAwesome5).attrs({
   name: "search",
-  color: theme.colors.secondary100,
+  color: theme.colors.secondary,
   size: 25,
 })``;

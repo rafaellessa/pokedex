@@ -1,6 +1,7 @@
 export const theme = {
   colors: {
-    primary: "transparent",
+    primary: "#FF0404",
+    secondary: "#fff",
 
     secondary100: "#0A1033",
     secondary90: "#0D133D",
@@ -23,5 +24,6 @@ export const theme = {
     title500: "Rajdhani_500Medium",
     text400: "Rajdhani_400Regular",
     text500: "Rajdhani_500Medium",
+    text700: "Rajdhani_700Bold",
   },
 };
