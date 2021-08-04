@@ -1,12 +1,10 @@
-import React from "react";
-
-import { Container, Title } from "./styles";
-import HeaderSearch from "../../components/HeaderSearch";
-import { useEffect } from "react";
-import PokemonService from "../../data/services/pokemon/index";
-import { PokemonActions } from "../../redux/reducers/reducer.pokemon";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import HeaderSearch from "../../components/HeaderSearch";
+import { PokemonActions } from "../../redux/reducers/reducer.pokemon";
 import { getPokemons } from "../../redux/selectors/selector.pokemon";
+import { Container } from "./styles";
+
 
 const Home: React.FC = () => {
   const dispatch = useDispatch();
