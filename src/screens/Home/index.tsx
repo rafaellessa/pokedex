@@ -5,7 +5,6 @@ import { PokemonActions } from "../../redux/reducers/reducer.pokemon";
 import { getPokemons } from "../../redux/selectors/selector.pokemon";
 import { Container } from "./styles";
 
-
 const Home: React.FC = () => {
   const dispatch = useDispatch();
 

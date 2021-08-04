@@ -5,20 +5,17 @@ import PokemonService from "../../data/services/pokemon";
 
 function* getAllPokemons(action: PokemonRequestGetAllPokemon) {
   try {
-        
     const response = yield call(PokemonService.getAllPokemons);
 
-    yield put(PokemonActions.pokedexSuccessGetAllPokemon(response))
-    
+    yield put(PokemonActions.pokedexSuccessGetAllPokemon(response));
   } catch (error) {
-    yield put(PokemonActions.pokedexFailureGetAllPokemon(error.message))
+    yield put(PokemonActions.pokedexFailureGetAllPokemon(error.message));
   }
 }
 
 export default function* root() {
   yield takeLatest(
-		PokemonTypes.POKEDEX_REQUEST_GET_ALL_POKEMON,
+    PokemonTypes.POKEDEX_REQUEST_GET_ALL_POKEMON,
     getAllPokemons
-	);
-  
+  );
 }
