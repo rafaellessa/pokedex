@@ -6,19 +6,18 @@ import { getPokemons } from "../../redux/selectors/selector.pokemon";
 import { Container, PokemonList } from "./styles";
 import ListItem from "./ListItem";
 import { PokemonFactory } from "~/data/services/pokemon/types";
+import { RefreshControl } from "react-native";
+import { theme } from "../../global/theme/theme";
 
 const Home: React.FC = () => {
   const dispatch = useDispatch();
 
   const pokemons = useSelector(getPokemons);
   useEffect(() => {
-    console.tron.log("Aqui");
     fetchPokemons();
   }, []);
 
-  useEffect(() => {
-    console.tron.log("Pokemons no Selector: ", pokemons);
-  }, [pokemons]);
+  useEffect(() => {}, [pokemons]);
 
   const fetchPokemons = async () => {
     dispatch(PokemonActions.pokedexRequestGetAllPokemon());
@@ -34,6 +33,14 @@ const Home: React.FC = () => {
         data={pokemons}
         renderItem={renderItem}
         keyExtractor={(item: PokemonFactory) => String(item.name)}
+        refreshControl={
+          <RefreshControl
+            refreshing={false}
+            onRefresh={fetchPokemons}
+            colors={[theme.colors.primary]}
+            tintColor={theme.colors.primary}
+          />
+        }
       />
     </Container>
   );
