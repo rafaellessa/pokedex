@@ -1,18 +1,19 @@
 import { Pokemon } from "./../../../redux/types/types.pokemon";
 import makeRequest from "../../../data/datasource/api/makeRequest";
 import action from "./actions";
+import { factoryPokemon } from "./factory";
+import { PokemonFactory } from "./types";
 
 const PokemonService = {
-  async getAllPokemons(): Promise<Pokemon[]> {
-    
+  async getAllPokemons(): Promise<PokemonFactory[]> {
     const response = await makeRequest({
       url: action.getAll,
     });
 
-
     if (response.status !== 200) {
     }
-    return response.data.results;
+
+    return factoryPokemon(response.data.results);
   },
 };
 
