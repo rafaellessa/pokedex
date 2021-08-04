@@ -1,16 +1,13 @@
 import React from "react";
-
 import { PokemonFactory } from "~/data/services/pokemon/types";
-
 import {
-  Badge,
   Container,
   Content,
+  LikeContainer,
+  LikeIcon,
   PokemonImage,
   Title,
   TitleContainer,
-  BadgeContainer,
-  BadgeTitle,
 } from "./styles";
 
 type ListItemProps = PokemonFactory;
@@ -29,11 +26,9 @@ const ListItem: React.FC<ListItemProps> = ({ id, name, image }) => {
         <TitleContainer>
           <Title>{name}</Title>
         </TitleContainer>
-        <BadgeContainer>
-          <Badge>
-            <BadgeTitle>Special</BadgeTitle>
-          </Badge>
-        </BadgeContainer>
+        <LikeContainer>
+          <LikeIcon />
+        </LikeContainer>
       </Content>
     </Container>
   );

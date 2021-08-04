@@ -19,7 +19,7 @@ export const IconContainer = styled.TouchableOpacity`
 `;
 
 export const Title = styled.Text`
-  font-size: 24px;
+  font-size: 26px;
   font-family: ${theme.fonts.title700};
   color: ${theme.colors.secondary};
 `;

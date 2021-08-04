@@ -23,7 +23,6 @@ const Home: React.FC = () => {
   const fetchPokemons = async () => {
     dispatch(PokemonActions.pokedexRequestGetAllPokemon());
   };
-
   const renderItem = ({ item }: { item: PokemonFactory }) => (
     <ListItem name={item.name} id={item.id} image={item.image} />
   );
