@@ -3,13 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import HeaderSearch from "../../components/HeaderSearch";
 import { PokemonActions } from "../../redux/reducers/reducer.pokemon";
 import { getPokemons } from "../../redux/selectors/selector.pokemon";
-import { Container } from "./styles";
+import { Container, PokemonList } from "./styles";
+import ListItem from "./ListItem";
+import { PokemonFactory } from "~/data/services/pokemon/types";
 
 const Home: React.FC = () => {
   const dispatch = useDispatch();
 
   const pokemons = useSelector(getPokemons);
   useEffect(() => {
+    console.tron.log("Aqui");
     fetchPokemons();
   }, []);
 
@@ -21,9 +24,18 @@ const Home: React.FC = () => {
     dispatch(PokemonActions.pokedexRequestGetAllPokemon());
   };
 
+  const renderItem = ({ item }) => (
+    <ListItem name={item.name} id={item.id} image={item.image} />
+  );
+
   return (
     <Container>
       <HeaderSearch title="Pokemon List" />
+      <PokemonList
+        data={pokemons}
+        renderItem={renderItem}
+        keyExtractor={(item: PokemonFactory) => String(item.name)}
+      />
     </Container>
   );
 };
