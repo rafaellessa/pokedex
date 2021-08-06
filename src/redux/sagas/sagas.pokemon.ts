@@ -1,13 +1,12 @@
-import { PokemonRequestGetAllPokemon } from "./../types/types.pokemon";
-import { PokemonActions, PokemonTypes } from "../reducers/reducer.pokemon";
 import { call, put, select, takeLatest } from "redux-saga/effects";
 import PokemonService from "../../data/services/pokemon";
+import { PokemonActions, PokemonTypes } from "../reducers/reducer.pokemon";
 import { getPokemons } from "../selectors/selector.pokemon";
-import store from "../store";
+import { PokemonRequestGetAllPokemon } from "./../types/types.pokemon";
 
 function* getAllPokemons({ data }: PokemonRequestGetAllPokemon) {
   try {
-    const { offset } = data;
+    const offset = data?.offset;
     const response = yield call(PokemonService.getAllPokemons, { offset });
 
     if (offset) {
