@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import Home from "../../screens/Home";
+import Details from "../../screens/Details";
 
 interface RootRouteScreens {
   name: string;
@@ -12,6 +13,10 @@ export const navigations: RootRouteScreens[] = [
   {
     name: "Home",
     component: Home,
+  },
+  {
+    name: "Details",
+    component: Details,
   },
 ];
 
