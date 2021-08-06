@@ -35,7 +35,6 @@ const Details: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.tron.log("Pokemon Info: ", pokemonInfo);
     setTimeout(() => {
       if (pokemonInfo) {
         setLoading(false);
@@ -44,7 +43,7 @@ const Details: React.FC = () => {
   }, [pokemonInfo]);
 
   const getPokemonInfo = async () => {
-    const response = await PokemonService.getPokemonStats(1);
+    const response = await PokemonService.getPokemonStats(Number(item.id));
     if (response) {
       setPokemonInfo(response);
     }
@@ -76,7 +75,7 @@ const Details: React.FC = () => {
         />
       </PokemonImageContainer>
       <ContentContainer>
-        <Content item={item} />
+        <Content item={item} pokemonInfo={pokemonInfo!} />
       </ContentContainer>
     </Container>
   );

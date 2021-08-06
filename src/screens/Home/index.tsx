@@ -55,7 +55,6 @@ const Home: React.FC = () => {
   };
 
   const handleNavigate = (item: PokemonFactory) => {
-    console.tron.log("Item click", item);
     navigate.navigate("Details", { item });
   };
 

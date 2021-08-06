@@ -13,7 +13,6 @@ function* getAllPokemons({ data }: PokemonRequestGetAllPokemon) {
     if (offset) {
       const previousPokemon = yield select(getPokemons);
       const newPokemons = [...previousPokemon, ...response];
-      console.tron.log("Previous", previousPokemon);
       yield put(PokemonActions.pokedexSuccessGetAllPokemon(newPokemons));
     } else {
       yield put(PokemonActions.pokedexSuccessGetAllPokemon(response));

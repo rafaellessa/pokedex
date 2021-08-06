@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import { PokemonFactory } from "~/data/services/pokemon/types";
+import { PokemonFactory, PokemonInfo } from "~/data/services/pokemon/types";
 import TabViewCustom from "../../../components/TabView";
 import BaseStats from "./BaseStats";
 import { factoryRouteTabs } from "./model";
@@ -15,16 +15,19 @@ import Chart from "../Chart";
 
 interface ContentProps {
   item: PokemonFactory;
+  pokemonInfo: PokemonInfo;
 }
 
-const Content: React.FC<ContentProps> = ({ item }) => {
+const Content: React.FC<ContentProps> = ({ item, pokemonInfo }) => {
   const [index, setIndex] = useState(0);
   const routes = factoryRouteTabs();
 
   const renderScene = () => {
     switch (index) {
       case 0:
-        return <BaseStats item={item} children={<Chart baseStat={item} />} />;
+        return (
+          <BaseStats item={item} children={<Chart baseStat={pokemonInfo} />} />
+        );
       case 1:
         return <Container />;
       case 2:
