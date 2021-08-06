@@ -2,24 +2,38 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import HeaderSearch from "../../components/HeaderSearch";
 import { PokemonActions } from "../../redux/reducers/reducer.pokemon";
-import { getPokemons } from "../../redux/selectors/selector.pokemon";
+import {
+  getPokemonMetadata,
+  getPokemons,
+} from "../../redux/selectors/selector.pokemon";
 import { Container, PokemonList } from "./styles";
 import ListItem from "./ListItem";
 import { PokemonFactory } from "~/data/services/pokemon/types";
 import { ActivityIndicator, RefreshControl } from "react-native";
 import { theme } from "../../global/theme/theme";
 import { useState } from "react";
+import { LIMIT_PAGE } from "../../utils/constants";
+import Loading from "../../components/Loading";
 
 const Home: React.FC = () => {
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
+  const [load, setLoad] = useState(true);
 
   const pokemons = useSelector(getPokemons);
+  const { loading } = useSelector(getPokemonMetadata);
+
   useEffect(() => {
     fetchPokemons();
   }, []);
 
-  useEffect(() => {}, [pokemons]);
+  useEffect(() => {
+    setTimeout(() => {
+      if (pokemons.length > 0) {
+        setLoad(false);
+      }
+    }, 2000);
+  }, [pokemons]);
 
   useEffect(() => {
     if (page > 1) {
@@ -29,7 +43,7 @@ const Home: React.FC = () => {
 
   const fetchPokemons = async () => {
     if (page > 1) {
-      const limit = 20;
+      const limit = LIMIT_PAGE;
       const offset = page * limit;
       dispatch(PokemonActions.pokedexRequestGetAllPokemon({ offset }));
     } else {
@@ -37,16 +51,18 @@ const Home: React.FC = () => {
     }
   };
   const renderItem = ({ item }: { item: PokemonFactory }) => (
-    <ListItem name={item.name} id={item.id} image={item.image} />
+    <ListItem name={item.name} id={item.id} image={item.image} key={item.id} />
   );
 
-  return (
+  const renderLoading = () => <Loading />;
+
+  const renderContent = () => (
     <Container>
       <HeaderSearch title="Pokemon List" />
       <PokemonList
         data={pokemons}
         renderItem={renderItem}
-        keyExtractor={(item: PokemonFactory) => String(item.name)}
+        keyExtractor={(item: PokemonFactory) => String(item.id)}
         refreshControl={
           <RefreshControl
             refreshing={false}
@@ -59,10 +75,20 @@ const Home: React.FC = () => {
         onEndReached={() => {
           setPage(page + 1);
         }}
-        ListFooterComponent={<ActivityIndicator />}
+        ListFooterComponent={loading ? <ActivityIndicator /> : null}
       />
     </Container>
   );
+
+  const validateRender = () => {
+    if (load) {
+      return renderLoading();
+    } else {
+      return renderContent();
+    }
+  };
+
+  return validateRender();
 };
 
 export default Home;
