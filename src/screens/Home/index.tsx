@@ -14,8 +14,11 @@ import { theme } from "../../global/theme/theme";
 import { useState } from "react";
 import { LIMIT_PAGE } from "../../utils/constants";
 import Loading from "../../components/Loading";
+import { useNavigation } from "@react-navigation/native";
 
 const Home: React.FC = () => {
+  const navigate = useNavigation();
+
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const [load, setLoad] = useState(true);
@@ -50,8 +53,22 @@ const Home: React.FC = () => {
       dispatch(PokemonActions.pokedexRequestGetAllPokemon({}));
     }
   };
+
+  const handleNavigate = (item: PokemonFactory) => {
+    console.tron.log("Item click", item);
+    navigate.navigate("Details", { item });
+  };
+
   const renderItem = ({ item }: { item: PokemonFactory }) => (
-    <ListItem name={item.name} id={item.id} image={item.image} key={item.id} />
+    <ListItem
+      onClick={() => {
+        handleNavigate(item);
+      }}
+      name={item.name}
+      id={item.id}
+      image={item.image}
+      key={item.id}
+    />
   );
 
   const renderLoading = () => <Loading />;

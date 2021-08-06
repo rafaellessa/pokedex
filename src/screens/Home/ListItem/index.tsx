@@ -10,12 +10,14 @@ import {
   TitleContainer,
 } from "./styles";
 
-type ListItemProps = PokemonFactory;
+interface ListItemProps extends PokemonFactory {
+  onClick: (item: PokemonFactory) => void;
+}
 
-const ListItem: React.FC<ListItemProps> = ({ id, name, image }) => {
+const ListItem: React.FC<ListItemProps> = ({ id, name, image, onClick }) => {
   return (
     <Container>
-      <Content>
+      <Content onPress={onClick}>
         <PokemonImage
           width={80}
           height={80}

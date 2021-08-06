@@ -13,9 +13,7 @@ export const Content = styled.TouchableOpacity`
   flex-direction: row;
 `;
 
-export const PokemonImageContainer = styled.View`
-  background-color: green;
-`;
+export const PokemonImageContainer = styled.View``;
 
 export const TitleContainer = styled.View`
   flex: 1;
