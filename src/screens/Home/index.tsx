@@ -19,7 +19,7 @@ import { useNavigation } from "@react-navigation/native";
 const Home: React.FC = () => {
   const navigate = useNavigation();
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const dispatch = useDispatch();
   const [load, setLoad] = useState(true);
 
@@ -39,7 +39,8 @@ const Home: React.FC = () => {
   }, [pokemons]);
 
   useEffect(() => {
-    if (page > 1) {
+    console.tron.log("Page: ", page);
+    if (page > 0 && !loading) {
       fetchPokemons();
     }
   }, [page]);
@@ -49,6 +50,8 @@ const Home: React.FC = () => {
       const limit = LIMIT_PAGE;
       const offset = page * limit;
       dispatch(PokemonActions.pokedexRequestGetAllPokemon({ offset }));
+    } else if (page === 1) {
+      dispatch(PokemonActions.pokedexRequestGetAllPokemon({ offset: 20 }));
     } else {
       dispatch(PokemonActions.pokedexRequestGetAllPokemon({}));
     }
@@ -87,9 +90,11 @@ const Home: React.FC = () => {
             tintColor={theme.colors.primary}
           />
         }
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.2}
         onEndReached={() => {
-          setPage(page + 1);
+          if (!loading) {
+            setPage(page + 1);
+          }
         }}
         ListFooterComponent={loading ? <ActivityIndicator /> : null}
       />
