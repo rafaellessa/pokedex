@@ -1,7 +1,5 @@
-import { View } from "react-native";
-import { theme } from "../../../global/theme/theme";
 import styled from "styled-components/native";
-import { factoryChartColor } from "./model";
+import { theme } from "../../../global/theme/theme";
 
 export const Container = styled.View`
   flex: 1;
@@ -9,6 +7,7 @@ export const Container = styled.View`
   background-color: ${theme.colors.secondary};
   border-radius: 10px;
   padding: 10px;
+  justify-content: center;
 `;
 
 export const Content = styled.View`
@@ -30,7 +29,7 @@ export const Title = styled.Text`
   font-size: 14px;
 `;
 export const Count = styled.Text`
-  font-family: ${theme.fonts.text500};
+  font-family: ${theme.fonts.text700};
   font-size: 14px;
   margin-left: 10px;
   color: ${(props) => (props.count ? props.count.bg : "#000")};
@@ -61,7 +60,6 @@ export const ChartView = styled.View`
 `;
 
 export const TotalContainer = styled.View`
-  flex: 1;
   justify-content: flex-start;
   flex-direction: row;
   padding-left: 22px;
