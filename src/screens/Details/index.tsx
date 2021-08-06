@@ -47,7 +47,7 @@ const Details: React.FC = () => {
           }}
         />
       </PokemonImageContainer>
-      <Content />
+      <Content item={item} />
     </Container>
   );
 };

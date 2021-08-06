@@ -27,14 +27,14 @@ export const TabBar = styled(RNTabBar).attrs(({ tabsLength }: TabBarProps) => ({
     width: Math.round(width / tabsLength),
   },
 }))`
-  background-color: ${theme.colors.secondary};
+  background-color: ${theme.colors.secondary100};
   elevation: 0;
   height: 50px;
 `;
 
 export const TextTab = styled.Text`
   font-family: ${({ focused }: StyledPropTypes) =>
-    focused ? theme.fonts.title700 : theme.fonts.text400};
+    focused ? theme.fonts.title700 : theme.fonts.text500};
   font-size: 18px;
 `;
 
