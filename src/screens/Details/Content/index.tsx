@@ -24,7 +24,7 @@ const Content: React.FC<ContentProps> = ({ item }) => {
   const renderScene = () => {
     switch (index) {
       case 0:
-        return <BaseStats item={item} children={<Chart />} />;
+        return <BaseStats item={item} children={<Chart baseStat={item} />} />;
       case 1:
         return <Container />;
       case 2:

@@ -1,12 +1,8 @@
-import {
-  Pokemon,
-  PokemonRequestGetAllPokemonParams,
-} from "./../../../redux/types/types.pokemon";
 import makeRequest from "../../../data/datasource/api/makeRequest";
+import { PokemonRequestGetAllPokemonParams } from "./../../../redux/types/types.pokemon";
 import action from "./actions";
-import { factoryPokemon } from "./factory";
-import { PokemonFactory } from "./types";
-import { AxiosResponse } from "axios";
+import { factoryPokemon, factoryPokemonStats } from "./factory";
+import { PokemonFactory, PokemonInfo } from "./types";
 
 const PokemonService = {
   async getAllPokemons({
@@ -22,6 +18,13 @@ const PokemonService = {
     }
 
     return factoryPokemon(response.data.results);
+  },
+  async getPokemonStats(id: number): Promise<PokemonInfo> {
+    const response = await makeRequest({
+      url: action.getPokemonStats + id,
+    });
+
+    return factoryPokemonStats(response.data);
   },
 };
 

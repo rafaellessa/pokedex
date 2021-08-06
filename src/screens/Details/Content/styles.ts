@@ -6,7 +6,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 export const Container = styled.View`
   flex: 1;
   background-color: ${theme.colors.secondary100};
-
+  width: 100%;
   border-radius: 20px;
   margin-top: 10px;
 `;

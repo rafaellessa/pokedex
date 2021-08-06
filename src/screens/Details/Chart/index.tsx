@@ -1,13 +1,9 @@
 import React from "react";
+import { PokemonInfo } from "~/data/services/pokemon/types";
 import { Container } from "./styles";
 
 interface BaseStatProps {
-  baseStat: BaseStatChartProps[];
-}
-
-interface BaseStatChartProps {
-  title: string;
-  count: number;
+  baseStat: PokemonInfo;
 }
 
 const Chart: React.FC<BaseStatProps> = ({ baseStat }) => {

@@ -38,3 +38,7 @@ export const PokemonImageContainer = styled.View`
   justify-content: center;
   align-items: center;
 `;
+
+export const ContentContainer = styled.View`
+  flex: 1;
+`;
