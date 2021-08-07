@@ -155,8 +155,8 @@ const Home: React.FC = () => {
           <RefreshControl
             refreshing={loading}
             onRefresh={handleRefetch}
-            colors={[theme.colors.secondary]}
-            tintColor={theme.colors.secondary}
+            colors={[theme.colors.primary]}
+            tintColor={theme.colors.primary}
           />
         }
         onEndReachedThreshold={0.2}
