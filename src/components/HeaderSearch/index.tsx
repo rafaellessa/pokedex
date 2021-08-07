@@ -12,19 +12,21 @@ interface HeaderSearchProps {
   onSearch?: boolean;
   search?: string;
   title: string;
+  onSearchPress?: () => void;
 }
 
 const HeaderSearch: React.FC<HeaderSearchProps> = ({
   onSearch,
   search,
   title,
+  onSearchPress,
 }) => {
   return (
     <Container>
       <TitleContainer>
         <Title>{title}</Title>
       </TitleContainer>
-      <IconContainer>
+      <IconContainer onPress={onSearchPress}>
         <SearchIcon />
       </IconContainer>
     </Container>

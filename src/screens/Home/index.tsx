@@ -1,10 +1,18 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { ActivityIndicator, RefreshControl } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { PokemonFactory } from "~/data/services/pokemon/types";
+import { Pokemon } from "~/redux/types/types.pokemon";
 import HeaderSearch from "../../components/HeaderSearch";
+import InputSearch from "../../components/InputSearch";
 import Loading from "../../components/Loading";
+import { PokemonFactory } from "../../data/services/pokemon/types";
 import { theme } from "../../global/theme/theme";
 import { PokemonActions } from "../../redux/reducers/reducer.pokemon";
 import {
@@ -13,17 +21,21 @@ import {
 } from "../../redux/selectors/selector.pokemon";
 import { LIMIT_PAGE } from "../../utils/constants";
 import ListItem from "./ListItem";
-import { Container, PokemonList } from "./styles";
+import { Container, HeaderContainer, PokemonList } from "./styles";
 
 const Home: React.FC = () => {
-  const navigate = useNavigation();
-
   const [page, setPage] = useState(0);
-  const dispatch = useDispatch();
+  const [searchText, setSearchText] = useState("");
   const [load, setLoad] = useState(true);
+  const [searching, setSearching] = useState(false);
+  const [filteredPokemons, setFilteredPokemons] = useState<Pokemon[]>([]);
 
+  const searchTextRef = useRef<ReactNode>(null);
+
+  const dispatch = useDispatch();
   const pokemons = useSelector(getPokemons);
   const { loading } = useSelector(getPokemonMetadata);
+  const navigate = useNavigation();
 
   useEffect(() => {
     fetchPokemons();
@@ -37,6 +49,16 @@ const Home: React.FC = () => {
       }
     }, 2000);
   }, [pokemons]);
+
+  useEffect(() => {
+    if (searchText === "") {
+      setFilteredPokemons([]);
+    }
+  }, [searchText]);
+
+  useEffect(() => {
+    console.tron.log("Filtred", filteredPokemons);
+  }, [filteredPokemons]);
 
   const fetchPokemons = async (offset?: number) => {
     if (offset) {
@@ -57,6 +79,19 @@ const Home: React.FC = () => {
     navigate.navigate("Details", { item });
   };
 
+  const onBackPress = useCallback(() => {
+    setSearchText("");
+    setSearching(false);
+  }, []);
+
+  const parseFilteredPokemons = (search: string) => {
+    const filtered = pokemons.filter((pokemon) => pokemon.name === search);
+    if (filtered.length === 0) {
+    } else {
+      setFilteredPokemons(filtered);
+    }
+  };
+
   const renderItem = ({ item }: { item: PokemonFactory }) => (
     <ListItem
       onClick={() => {
@@ -71,11 +106,50 @@ const Home: React.FC = () => {
 
   const renderLoading = () => <Loading />;
 
+  const renderHeaderSearch = () => (
+    <HeaderContainer>
+      <InputSearch
+        placeholder="digite..."
+        testID="search-input"
+        onChangeText={(text) => {
+          setSearchText(text);
+          parseFilteredPokemons(text);
+        }}
+        onEndEditing={() => {
+          console.tron.log("PAssou aquisasasa");
+        }}
+        autoCapitalize="none"
+        autoCorrect={false}
+        ref={searchTextRef}
+        onBlur={onBackPress}
+        onBackPress={onBackPress}
+        onClear={() => {
+          setSearchText("");
+        }}
+        onSubmitEditing={() => {
+          setSearching(false);
+        }}
+        autoFocus={true}
+      />
+    </HeaderContainer>
+  );
+
   const renderContent = () => (
     <Container>
-      <HeaderSearch title="Pokemon List" />
+      {searching ? (
+        renderHeaderSearch()
+      ) : (
+        <HeaderSearch
+          title="Pokemon List"
+          onSearchPress={() => {
+            setSearchText("");
+            setSearching(true);
+          }}
+        />
+      )}
+
       <PokemonList
-        data={pokemons}
+        data={filteredPokemons?.length > 0 ? filteredPokemons : pokemons}
         renderItem={renderItem}
         keyExtractor={(item: PokemonFactory) => String(item.id)}
         refreshControl={
@@ -88,7 +162,7 @@ const Home: React.FC = () => {
         }
         onEndReachedThreshold={0.2}
         onEndReached={() => {
-          if (!loading) {
+          if (!loading && filteredPokemons.length === 0) {
             fetchPokemons(page + 1);
             setPage(page + 1);
           }
