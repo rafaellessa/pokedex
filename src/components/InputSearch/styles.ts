@@ -44,7 +44,7 @@ export const IconContainer = styled(Animated.View)`
 export const SearchIcon = styled(Feather).attrs({
   name: "search",
   color: theme.colors.primary,
-  size: 35,
+  size: 20,
 })``;
 
 export const BackIcon = styled(Feather).attrs({

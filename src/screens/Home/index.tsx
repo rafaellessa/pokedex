@@ -77,6 +77,8 @@ const Home: React.FC = () => {
 
   const handleNavigate = (item: PokemonFactory) => {
     navigate.navigate("Details", { item });
+    setSearching(false);
+    setSearchText("");
   };
 
   const onBackPress = useCallback(() => {
@@ -113,21 +115,18 @@ const Home: React.FC = () => {
         testID="search-input"
         onChangeText={(text) => {
           setSearchText(text);
-          parseFilteredPokemons(text);
         }}
-        onEndEditing={() => {
-          console.tron.log("PAssou aquisasasa");
-        }}
+        onEndEditing={() => {}}
         autoCapitalize="none"
         autoCorrect={false}
         ref={searchTextRef}
-        onBlur={onBackPress}
+        onBlur={() => {}}
         onBackPress={onBackPress}
         onClear={() => {
           setSearchText("");
         }}
         onSubmitEditing={() => {
-          setSearching(false);
+          parseFilteredPokemons(searchText);
         }}
         autoFocus={true}
       />
