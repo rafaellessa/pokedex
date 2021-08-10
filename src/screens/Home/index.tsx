@@ -6,9 +6,8 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { ActivityIndicator, RefreshControl } from "react-native";
+import { ActivityIndicator, Alert, RefreshControl } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { Pokemon } from "~/redux/types/types.pokemon";
 import HeaderSearch from "../../components/HeaderSearch";
 import InputSearch from "../../components/InputSearch";
 import Loading from "../../components/Loading";
@@ -19,7 +18,14 @@ import {
   getPokemonMetadata,
   getPokemons,
 } from "../../redux/selectors/selector.pokemon";
+import { Pokemon } from "../../redux/types/types.pokemon";
 import { LIMIT_PAGE } from "../../utils/constants";
+import {
+  addFavorite,
+  FavoriteProps,
+  getFavoriteList,
+  removeFavorite,
+} from "../../utils/firebase";
 import ListItem from "./ListItem";
 import { Container, HeaderContainer, PokemonList } from "./styles";
 
@@ -29,6 +35,7 @@ const Home: React.FC = () => {
   const [load, setLoad] = useState(true);
   const [searching, setSearching] = useState(false);
   const [filteredPokemons, setFilteredPokemons] = useState<Pokemon[]>([]);
+  const [favorites, setFavorites] = useState<FavoriteProps[]>([]);
 
   const searchTextRef = useRef<ReactNode>(null);
 
@@ -38,11 +45,19 @@ const Home: React.FC = () => {
   const navigate = useNavigation();
 
   useEffect(() => {
+    const unsubscribe = navigate.addListener("focus", () => {
+      fetchFavorites();
+    });
+
+    return unsubscribe;
+  }, [navigate]);
+
+  useEffect(() => {
+    fetchFavorites();
     fetchPokemons();
   }, []);
 
   useEffect(() => {
-    console.tron.log("Pokemons: ", pokemons);
     setTimeout(() => {
       if (pokemons.length > 0) {
         setLoad(false);
@@ -56,9 +71,10 @@ const Home: React.FC = () => {
     }
   }, [searchText]);
 
-  useEffect(() => {
-    console.tron.log("Filtred", filteredPokemons);
-  }, [filteredPokemons]);
+  const fetchFavorites = async () => {
+    const parsedFavorites = await getFavoriteList();
+    setFavorites(parsedFavorites);
+  };
 
   const fetchPokemons = async (offset?: number) => {
     if (offset) {
@@ -75,8 +91,28 @@ const Home: React.FC = () => {
     fetchPokemons();
   };
 
+  const isFavorite = (item: PokemonFactory) => {
+    return favorites.some((favorite) => favorite.id === item.id);
+  };
+
+  const handleAddFavorite = async (item: PokemonFactory) => {
+    if (!isFavorite(item)) {
+      if (favorites.length < 5) {
+        await addFavorite(item);
+        await fetchFavorites();
+      } else {
+        Alert.alert("Você já possui 5 pokemons na lista de favoritos");
+      }
+    } else {
+      await removeFavorite(item.id);
+      await fetchFavorites();
+    }
+  };
+
   const handleNavigate = (item: PokemonFactory) => {
-    navigate.navigate("Details", { item });
+    navigate.navigate("Details", {
+      item,
+    });
     setSearching(false);
     setSearchText("");
   };
@@ -103,6 +139,10 @@ const Home: React.FC = () => {
       id={item.id}
       image={item.image}
       key={item.id}
+      onFavoriteClick={() => {
+        handleAddFavorite(item);
+      }}
+      isFavorite={isFavorite(item)}
     />
   );
 

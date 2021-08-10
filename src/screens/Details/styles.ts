@@ -1,7 +1,7 @@
 import { theme } from "./../../global/theme/theme";
 import { Platform, View } from "react-native";
 import styled from "styled-components/native";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import SvgUri from "react-native-svg-uri";
 
 export const Container = styled.SafeAreaView`
@@ -42,3 +42,13 @@ export const PokemonImageContainer = styled.View`
 export const ContentContainer = styled.View`
   flex: 1;
 `;
+
+export const LikeContainer = styled.TouchableOpacity`
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+`;
+export const LikeIcon = styled(MaterialIcons).attrs({
+  color: theme.colors.secondary,
+  size: 35,
+})``;

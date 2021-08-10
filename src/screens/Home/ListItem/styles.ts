@@ -35,7 +35,6 @@ export const LikeContainer = styled.TouchableOpacity`
   margin-right: 10px;
 `;
 export const LikeIcon = styled(MaterialIcons).attrs({
-  name: "favorite-border",
   color: theme.colors.primary,
   size: 35,
 })``;

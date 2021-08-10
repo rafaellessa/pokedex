@@ -16,9 +16,14 @@ import Chart from "../Chart";
 interface ContentProps {
   item: PokemonFactory;
   pokemonInfo: PokemonInfo;
+  onPressLikeButton: () => void;
 }
 
-const Content: React.FC<ContentProps> = ({ item, pokemonInfo }) => {
+const Content: React.FC<ContentProps> = ({
+  item,
+  pokemonInfo,
+  onPressLikeButton,
+}) => {
   const [index, setIndex] = useState(0);
   const routes = factoryRouteTabs();
 
@@ -44,12 +49,14 @@ const Content: React.FC<ContentProps> = ({ item, pokemonInfo }) => {
         routes={routes}
       />
 
-      <FooterContainer>
+      {/* <FooterContainer>
         <ButtonLikeContainer>
-          <ButtonLikeTitle>Favoritar</ButtonLikeTitle>
+          <ButtonLikeTitle onPress={onPressLikeButton}>
+            Favoritar
+          </ButtonLikeTitle>
           <LikeIcon />
         </ButtonLikeContainer>
-      </FooterContainer>
+      </FooterContainer> */}
     </Container>
   );
 };

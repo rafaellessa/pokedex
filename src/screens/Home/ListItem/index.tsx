@@ -12,9 +12,18 @@ import {
 
 interface ListItemProps extends PokemonFactory {
   onClick: (item: PokemonFactory) => void;
+  onFavoriteClick: (item: PokemonFactory) => void;
+  isFavorite: boolean;
 }
 
-const ListItem: React.FC<ListItemProps> = ({ id, name, image, onClick }) => {
+const ListItem: React.FC<ListItemProps> = ({
+  id,
+  name,
+  image,
+  onClick,
+  onFavoriteClick,
+  isFavorite,
+}) => {
   return (
     <Container>
       <Content onPress={onClick}>
@@ -29,7 +38,11 @@ const ListItem: React.FC<ListItemProps> = ({ id, name, image, onClick }) => {
           <Title>{name}</Title>
         </TitleContainer>
         <LikeContainer>
-          <LikeIcon />
+          <LikeIcon
+            favorite={isFavorite}
+            onPress={onFavoriteClick}
+            name={isFavorite ? "favorite" : "favorite-border"}
+          />
         </LikeContainer>
       </Content>
     </Container>
